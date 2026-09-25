@@ -23,12 +23,12 @@ jobs:
         env:
           STOCK_API_KEY: ${{ secrets.STOCK_API_KEY }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: node stock-agent.js
+        run: node stock-agent/stock-agent.js
 
       - name: Commit updated price file
         run: |
           git config user.name "Stock Agent Bot"
           git config user.email "actions@github.com"
-          git add data/price.json
+          git add stock-agent/data/price.json
           git diff --staged --quiet || git commit -m "ອັບເດດລາຄາຫຸ້ນປະຈຳວັນ"
           git push
