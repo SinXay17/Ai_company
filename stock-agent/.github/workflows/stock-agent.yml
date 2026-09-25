@@ -1,0 +1,34 @@
+name: Stock Agent
+
+on:
+  schedule:
+    # 08:00 ເວລາລາວ (UTC+7) = 01:00 UTC
+    - cron: "0 1 * * *"
+  workflow_dispatch: {} # ສາມາດກົດແລ່ນເອງຈາກແຖບ Actions ໃນ GitHub
+
+permissions:
+  contents: write # ໃຫ້ສິດ commit ໄຟລ໌ລາຄາກັບເຂົ້າ repo
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Run stock agent
+        env:
+          STOCK_API_KEY: ${{ secrets.STOCK_API_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: node stock-agent.js
+
+      - name: Commit updated price file
+        run: |
+          git config user.name "Stock Agent Bot"
+          git config user.email "actions@github.com"
+          git add data/price.json
+          git diff --staged --quiet || git commit -m "ອັບເດດລາຄາຫຸ້ນປະຈຳວັນ"
+          git push

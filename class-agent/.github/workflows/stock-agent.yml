@@ -1,0 +1,26 @@
+name: Class Agent
+
+on:
+  schedule:
+    - cron: "0 23 * * *"   # 06:00 ICT (UTC+7)
+  workflow_dispatch: {}
+
+jobs:
+  run-class-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install googleapis
+
+      - name: Run class agent
+        env:
+          GOOGLE_SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+          GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: node class-agent.js
