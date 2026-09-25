@@ -65,7 +65,7 @@ async function main() {
   } else {
     const lines = events.map((e) => {
       const time = e.start.dateTime ? formatTime(e.start.dateTime) : "ຕະຫຼອດມື້";
-      const room = e.location ? ` (ຫ້ອງ ${e.location})` : "";
+      const room = e.location ? ` (${e.location})` : "";
       return `🕒 ${time} - ${e.summary}${room}`;
     });
     message = `📚 ຕາຕະລາງຮຽນມື້ນີ້\n${lines.join("\n")}`;
