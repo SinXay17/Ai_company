@@ -5,7 +5,7 @@ const CALENDAR_ID = process.env.GOOGLE_CALENDAR_ID;
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
 
 if (!SERVICE_ACCOUNT_KEY || !CALENDAR_ID || !WEBHOOK_URL) {
-  console.error("ขาด GOOGLE_SERVICE_ACCOUNT_KEY, GOOGLE_CALENDAR_ID หรือ DISCORD_WEBHOOK_URL");
+  console.error("ຂາດ GOOGLE_SERVICE_ACCOUNT_KEY, GOOGLE_CALENDAR_ID ຫຼື DISCORD_WEBHOOK_URL");
   process.exit(1);
 }
 
@@ -21,7 +21,7 @@ function bangkokDayRange() {
 }
 
 function formatTime(iso) {
-  return new Date(iso).toLocaleTimeString("th-TH", {
+  return new Date(iso).toLocaleTimeString("lo-LA", {
     hour: "2-digit",
     minute: "2-digit",
     timeZone: "Asia/Bangkok",
@@ -34,7 +34,7 @@ async function sendToDiscord(message) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ content: message }),
   });
-  if (!res.ok) throw new Error(`ส่งเข้า Discord ไม่สำเร็จ: ${res.status}`);
+  if (!res.ok) throw new Error(`ສົ່ງເຂົ້າ Discord ບໍ່ສຳເລັດ: ${res.status}`);
 }
 
 async function main() {
@@ -62,21 +62,21 @@ async function main() {
 
   let message;
   if (events.length === 0) {
-    message = "🎉 วันนี้ไม่มีคาบเรียนครับ";
+    message = "🎉 ມື້ນີ້ບໍ່ມີຄາບຮຽນ";
   } else {
     const lines = events.map((e) => {
-      const time = e.start.dateTime ? formatTime(e.start.dateTime) : "ทั้งวัน";
-      const room = e.location ? ` (ห้อง ${e.location})` : "";
+      const time = e.start.dateTime ? formatTime(e.start.dateTime) : "ຕະຫຼອດມື້";
+      const room = e.location ? ` (ຫ້ອງ ${e.location})` : "";
       return `🕒 ${time} - ${e.summary}${room}`;
     });
-    message = `📚 ตารางเรียนวันนี้\n${lines.join("\n")}`;
+    message = `📚 ຕາຕະລາງຮຽນມື້ນີ້\n${lines.join("\n")}`;
   }
 
   await sendToDiscord(message);
-  console.log("ส่งสำเร็จ:\n" + message);
+  console.log("ສົ່ງສຳເລັດ:\n" + message);
 }
 
 main().catch((err) => {
-  console.error("Agent ทำงานล้มเหลว:", err.message);
+  console.error("Agent ເຮັດວຽກລົ້ມເຫຼວ:", err.message);
   process.exit(1);
 });
