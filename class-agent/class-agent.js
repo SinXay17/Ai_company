@@ -40,14 +40,13 @@ async function sendToDiscord(message) {
 async function main() {
   const credentials = JSON.parse(SERVICE_ACCOUNT_KEY);
 
-  const auth = new google.auth.JWT(
-    credentials.client_email,
-    null,
-    credentials.private_key,
-    ["https://www.googleapis.com/auth/calendar.readonly"]
-  );
+  const auth = new google.auth.GoogleAuth({
+    credentials,
+    scopes: ["https://www.googleapis.com/auth/calendar.readonly"],
+  });
+  const authClient = await auth.getClient();
 
-  const calendar = google.calendar({ version: "v3", auth });
+  const calendar = google.calendar({ version: "v3", auth: authClient });
   const { start, end } = bangkokDayRange();
 
   const res = await calendar.events.list({
