@@ -3,7 +3,7 @@ const { google } = require("googleapis");
 const SERVICE_ACCOUNT_KEY = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
 const CALENDAR_ID = process.env.GOOGLE_CALENDAR_ID;
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
-const LOG_SHEET_ID = process.env.CLASS_AGENT_LOG_SHEET_ID;
+const LOG_SHEET_ID = process.env.LOG_SHEET_ID;
 
 function laosDayRange() {
   const OFFSET = 7 * 60 * 60 * 1000;
@@ -35,7 +35,7 @@ async function sendToDiscord(message) {
 
 async function logRun(status, detail) {
   if (!SERVICE_ACCOUNT_KEY || !LOG_SHEET_ID) {
-    throw new Error("ຂາດ GOOGLE_SERVICE_ACCOUNT_KEY ຫຼື CLASS_AGENT_LOG_SHEET_ID ສຳລັບບັນທຶກຜົນ");
+    throw new Error("ຂາດ GOOGLE_SERVICE_ACCOUNT_KEY ຫຼື LOG_SHEET_ID ສຳລັບບັນທຶກຜົນ");
   }
 
   const auth = new google.auth.GoogleAuth({
@@ -43,6 +43,13 @@ async function logRun(status, detail) {
     scopes: ["https://www.googleapis.com/auth/spreadsheets"],
   });
   const sheets = google.sheets({ version: "v4", auth });
+  const { data: spreadsheet } = await sheets.spreadsheets.get({
+    spreadsheetId: LOG_SHEET_ID,
+    fields: "sheets(properties(title))",
+  });
+  const sheetTitle = spreadsheet.sheets?.[0]?.properties?.title;
+  if (!sheetTitle) throw new Error("ບໍ່ພົບແທັບໃນ Google Sheet");
+
   const timestamp = new Intl.DateTimeFormat("sv-SE", {
     timeZone: "Asia/Vientiane",
     dateStyle: "short",
@@ -51,11 +58,11 @@ async function logRun(status, detail) {
 
   await sheets.spreadsheets.values.append({
     spreadsheetId: LOG_SHEET_ID,
-    range: "Runs!A:C",
+    range: `'${sheetTitle.replace(/'/g, "''")}'!A:D`,
     valueInputOption: "RAW",
     insertDataOption: "INSERT_ROWS",
     requestBody: {
-      values: [[timestamp, status, detail.slice(0, 1000)]],
+      values: [[timestamp, "class-agent", status, detail.slice(0, 1000)]],
     },
   });
 }
