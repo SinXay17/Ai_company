@@ -110,7 +110,7 @@ async function main() {
     }
 
     await sendToDiscord(message);
-    detail = `Discord message sent; events=${events.length}`;
+    detail = message;
     console.log("ສົ່ງສຳເລັດ:\n" + message);
   } catch (err) {
     status = "FAILURE";
