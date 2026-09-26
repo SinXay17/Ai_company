@@ -19,10 +19,15 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Install dependencies
+        run: npm install googleapis
+
       - name: Run stock agent
         env:
           STOCK_API_KEY: ${{ secrets.STOCK_API_KEY }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          GOOGLE_SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+          LOG_SHEET_ID: ${{ secrets.LOG_SHEET_ID }}
         run: node stock-agent/stock-agent.js
 
       - name: Commit updated price file
