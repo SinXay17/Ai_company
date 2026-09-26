@@ -2,7 +2,7 @@ name: Class Agent
 
 on:
   schedule:
-    - cron: "0 23 * * *"   # 06:00 ICT (UTC+7)
+    - cron: "0 23 * * *"   # 06:00 ເວລາລາວ (UTC+7)
   workflow_dispatch: {}
 
 jobs:

@@ -2,8 +2,8 @@ name: Stock Agent
 
 on:
   schedule:
-    # 08:00 ເວລາລາວ (UTC+7) = 01:00 UTC
-    - cron: "0 1 * * *"
+    # 08:20 ເວລາລາວ (UTC+7) = 01:20 UTC
+    - cron: "20 1 * * *"
   workflow_dispatch: {} # ສາມາດກົດແລ່ນເອງຈາກແຖບ Actions ໃນ GitHub
 
 permissions:

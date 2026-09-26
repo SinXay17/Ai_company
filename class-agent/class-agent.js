@@ -9,12 +9,12 @@ if (!SERVICE_ACCOUNT_KEY || !CALENDAR_ID || !WEBHOOK_URL) {
   process.exit(1);
 }
 
-function bangkokDayRange() {
+function laosDayRange() {
   const OFFSET = 7 * 60 * 60 * 1000;
-  const bkkNow = new Date(Date.now() + OFFSET);
-  const y = bkkNow.getUTCFullYear();
-  const m = bkkNow.getUTCMonth();
-  const d = bkkNow.getUTCDate();
+  const laosNow = new Date(Date.now() + OFFSET);
+  const y = laosNow.getUTCFullYear();
+  const m = laosNow.getUTCMonth();
+  const d = laosNow.getUTCDate();
   const start = new Date(Date.UTC(y, m, d, 0, 0, 0) - OFFSET);
   const end = new Date(Date.UTC(y, m, d, 23, 59, 59) - OFFSET);
   return { start, end };
@@ -24,7 +24,7 @@ function formatTime(iso) {
   return new Date(iso).toLocaleTimeString("lo-LA", {
     hour: "2-digit",
     minute: "2-digit",
-    timeZone: "Asia/Bangkok",
+    timeZone: "Asia/Vientiane",
   });
 }
 
@@ -47,7 +47,7 @@ async function main() {
   const authClient = await auth.getClient();
 
   const calendar = google.calendar({ version: "v3", auth: authClient });
-  const { start, end } = bangkokDayRange();
+  const { start, end } = laosDayRange();
 
   const res = await calendar.events.list({
     calendarId: CALENDAR_ID,
