@@ -16,7 +16,7 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
-        run: npm install googleapis
+        run: npm ci
 
       - name: Run class agent
         env:
@@ -24,4 +24,4 @@ jobs:
           GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
           DISCORD_WEBHOOK_URL: ${{ secrets.CLASS_DISCORD_WEBHOOK_URL }}
           LOG_SHEET_ID: ${{ secrets.LOG_SHEET_ID }}
-        run: node class-agent/class-agent.js
+        run: npx tsx class-agent/class-agent.ts
