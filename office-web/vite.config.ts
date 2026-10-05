@@ -1,4 +1,4 @@
 import { defineConfig } from "vite";
 
-// base "./" ทำให้โฮสต์บน GitHub Pages (/Ai_company/) ได้โดยไม่ต้องใส่ชื่อ repo
+// ກຳນົດ base "./" ເພື່ອໃຫ້ໂຮສຕ໌ເທິງ GitHub Pages ໄດ້ໂດຍບໍ່ຕ້ອງລະບຸຊື່ repository.
 export default defineConfig({ base: "./" });

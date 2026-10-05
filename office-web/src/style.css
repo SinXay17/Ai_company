@@ -23,7 +23,7 @@ body {
     linear-gradient(var(--grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: 32px 32px;
-  font-family: "Noto Sans Lao", "Noto Sans Thai", system-ui, sans-serif;
+  font-family: "Phetsarath", sans-serif;
   line-height: 1.6;
 }
 
@@ -50,7 +50,7 @@ h3 { margin: 0; font-size: 1.05rem; font-weight: 800; }
   border-radius: var(--radius);
   box-shadow: 0 3px 0 var(--edge);
 }
-/* เทปกาวบนมุมการ์ด = ป้ายชื่อประจำโต๊ะ */
+/* ເທບກາວຢູ່ມຸມກາດເປັນປ້າຍຊື່ປະຈຳໂຕະ */
 .desk::before {
   content: "";
   position: absolute;

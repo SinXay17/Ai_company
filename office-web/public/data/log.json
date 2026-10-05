@@ -1,20 +1,20 @@
 [
   {
     "timestamp": "2026-10-05T10:30:00+07:00",
-    "agent": "Stock Agent",
+    "agent": "stock-agent",
     "status": "SUCCESS",
-    "detail": "อัปเดตราคาหุ้นและส่งสรุปเรียบร้อย"
+    "message": "ອັບເດດລາຄາຮຸ້ນ ແລະສົ່ງບົດສະຫຼຸບຮຽບຮ້ອຍແລ້ວ"
   },
   {
     "timestamp": "2026-10-05T08:00:00+07:00",
-    "agent": "Class Agent",
+    "agent": "class-agent",
     "status": "SUCCESS",
-    "detail": "ตรวจสอบตารางเรียนวันนี้เรียบร้อย"
+    "message": "ກວດກາຕາຕະລາງຮຽນມື້ນີ້ຮຽບຮ້ອຍແລ້ວ"
   },
   {
     "timestamp": "2026-10-04T10:30:00+07:00",
-    "agent": "Stock Agent",
+    "agent": "stock-agent",
     "status": "FAILURE",
-    "detail": "ไม่สามารถดึงข้อมูลราคาหุ้นได้"
+    "message": "ບໍ່ສາມາດດຶງຂໍ້ມູນລາຄາຮຸ້ນໄດ້"
   }
 ]
