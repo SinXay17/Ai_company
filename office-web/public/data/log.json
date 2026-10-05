@@ -1,0 +1,20 @@
+[
+  {
+    "timestamp": "2026-10-05T10:30:00+07:00",
+    "agent": "Stock Agent",
+    "status": "SUCCESS",
+    "detail": "อัปเดตราคาหุ้นและส่งสรุปเรียบร้อย"
+  },
+  {
+    "timestamp": "2026-10-05T08:00:00+07:00",
+    "agent": "Class Agent",
+    "status": "SUCCESS",
+    "detail": "ตรวจสอบตารางเรียนวันนี้เรียบร้อย"
+  },
+  {
+    "timestamp": "2026-10-04T10:30:00+07:00",
+    "agent": "Stock Agent",
+    "status": "FAILURE",
+    "detail": "ไม่สามารถดึงข้อมูลราคาหุ้นได้"
+  }
+]

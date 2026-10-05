@@ -1,0 +1,18 @@
+[
+  {
+    "id": "class-agent",
+    "name": "Class Agent",
+    "description": "ตรวจสอบตารางเรียนและแจ้งเตือนกิจกรรมประจำวัน",
+    "status": "idle",
+    "lastRun": "2026-10-05T08:00:00+07:00",
+    "schedule": "ทุกวัน · 08:00"
+  },
+  {
+    "id": "stock-agent",
+    "name": "Stock Agent",
+    "description": "ติดตามราคาและสรุปความเคลื่อนไหวของหุ้น",
+    "status": "online",
+    "lastRun": "2026-10-05T10:30:00+07:00",
+    "schedule": "ทุกวันทำการ"
+  }
+]
