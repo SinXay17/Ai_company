@@ -1,154 +1,143 @@
+/// <reference types="vite/client" />
 import "./style.css";
 import type { Agent, LogRow, RunStatus } from "./types";
 
-const FEED_LIMIT = 30;
+type Filter = "ALL" | RunStatus;
 
-async function loadJson<T>(file: string): Promise<T> {
-  const response = await fetch(`${import.meta.env.BASE_URL}data/${file}`, { cache: "no-cache" });
-  if (!response.ok) throw new Error(`ໂຫຼດ ${file} ບໍ່ສຳເລັດ (${response.status})`);
-  return (await response.json()) as T;
+const BASE = import.meta.env.BASE_URL;
+const TZ = "Asia/Vientiane";
+const state = { agents: [] as Agent[], rows: [] as LogRow[], filter: "ALL" as Filter, q: "" };
+
+const ESC: Record<string, string> = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+const esc = (s: string): string => s.replace(/[&<>"']/g, (c) => ESC[c] ?? c);
+const today = (): string => new Date().toLocaleDateString("en-CA", { timeZone: TZ });
+
+async function load<T>(file: string): Promise<T> {
+  const res = await fetch(`${BASE}data/${file}`, { cache: "no-cache" });
+  if (!res.ok) throw new Error(`${file}: HTTP ${res.status}`);
+  return (await res.json()) as T;
 }
 
-function isStatus(value: unknown): value is RunStatus {
-  return value === "SUCCESS" || value === "FAILURE";
+const badge = (s: RunStatus): string => `<span class="badge ${s === "SUCCESS" ? "ok" : "bad"}">${s}</span>`;
+
+function statCard(label: string, value: string, hint: string): string {
+  return `<div class="card stat"><p class="label">${label}</p><p class="num">${value}</p><p class="muted">${hint}</p></div>`;
 }
 
-function el<K extends keyof HTMLElementTagNameMap>(
-  tag: K,
-  className?: string,
-  text?: string,
-): HTMLElementTagNameMap[K] {
-  const node = document.createElement(tag);
-  if (className) node.className = className;
-  // ໃຊ້ textContent ສະເໝີ ເພາະຂໍ້ຄວາມຈາກບັນທຶກມາຈາກພາຍນອກ
-  if (text !== undefined) node.textContent = text;
-  return node;
+function agentCard(a: Agent): string {
+  const last = state.rows.find((r) => r.agent === a.id);
+  const failed = last?.status === "FAILURE";
+  return `<article class="card agent${failed ? " failed" : ""}">
+    <div class="agent-head">
+      <div class="avatar">${esc(a.emoji)}</div>
+      <div><h3>${esc(a.name)}</h3><p class="muted">${esc(a.role)}</p></div>
+    </div>
+    <div class="chips"><span class="chip">⏰ ${esc(a.schedule)}</span></div>
+    <div class="between">${last ? badge(last.status) : `<span class="badge idle">NO RUNS</span>`}
+      <span class="mono muted">${last ? esc(last.timestamp) : "—"}</span></div>
+    <div class="preview${failed ? " bad" : ""}">${last ? esc(last.message) : "Waiting for the first run"}</div>
+  </article>`;
 }
 
-function statusPill(status: RunStatus): HTMLSpanElement {
-  const ok = status === "SUCCESS";
-  return el("span", `pill ${ok ? "ok" : "fail"}`, ok ? "✓ ສຳເລັດ" : "✕ ລົ້ມເຫຼວ");
-}
-
-function renderStats(root: HTMLElement, rows: LogRow[]): void {
-  const total = rows.length;
-  const failed = rows.filter((r) => r.status === "FAILURE").length;
-  const rate = total === 0 ? "–" : `${(((total - failed) / total) * 100).toFixed(0)}%`;
-  const today = new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Vientiane" });
-  const todayRuns = rows.filter((r) => r.timestamp.startsWith(today)).length;
-
-  const items: Array<[string, string]> = [
-    ["ຈຳນວນການເຮັດວຽກ", String(total)],
-    ["ອັດຕາສຳເລັດ", rate],
-    ["ລົ້ມເຫຼວ", String(failed)],
-    ["ເຮັດວຽກມື້ນີ້", String(todayRuns)],
-  ];
-  root.replaceChildren(
-    ...items.map(([label, value]) => {
-      const box = el("div", "stat");
-      box.append(el("strong", undefined, value), el("span", undefined, label));
-      return box;
-    }),
+function feedHtml(): string {
+  const q = state.q.trim().toLowerCase();
+  const list = state.rows.filter(
+    (r) => (state.filter === "ALL" || r.status === state.filter) && (!q || `${r.agent} ${r.message}`.toLowerCase().includes(q)),
   );
-}
-
-function renderDesks(root: HTMLElement, agents: Agent[], rows: LogRow[]): void {
-  const cards = agents.map((agent) => {
-    const mine = rows.filter((r) => r.agent === agent.id);
-    const latest = mine[0];
-
-    const card = el("article", "desk");
-    const head = el("div", "desk-head");
-    head.append(el("span", "avatar", agent.emoji));
-    const who = el("div");
-    who.append(el("h3", undefined, agent.name), el("p", "role", agent.role));
-    head.append(who);
-
-    const meta = el("p", "meta", `ເຮັດວຽກ ${agent.schedule} · ${mine.length} ຄັ້ງ`);
-    card.append(head, meta);
-
-    if (latest) {
-      card.append(statusPill(latest.status), el("p", "when", formatTimestamp(latest.timestamp)));
-      card.append(el("p", "snippet", latest.message));
-    } else {
-      card.append(el("p", "when", "ຍັງບໍ່ມີລາຍງານ"));
-    }
-    return card;
-  });
-
-  const vacant = el("article", "desk vacant");
-  vacant.append(
-    el("span", "avatar", "＋"),
-    el("h3", undefined, "ຕຳແໜ່ງວ່າງ"),
-    el("p", "meta", "ເພີ່ມພະນັກງານໃໝ່ໃນໄຟລ໌ລາຍຊື່ພະນັກງານ"),
-  );
-
-  root.replaceChildren(...cards, vacant);
-}
-
-function renderFeed(root: HTMLElement, agents: Agent[], rows: LogRow[]): void {
-  const byId = new Map(agents.map((a) => [a.id, a]));
-  if (rows.length === 0) {
-    root.replaceChildren(el("li", "empty", "ຍັງບໍ່ມີກິດຈະກຳ — ລໍຖ້າການເຮັດວຽກຄັ້ງທຳອິດ"));
-    return;
+  if (list.length === 0) {
+    return `<div class="empty"><p class="emoji">📭</p><p>No activity to show yet.</p></div>`;
   }
-  root.replaceChildren(
-    ...rows.slice(0, FEED_LIMIT).map((row) => {
-      const agent = byId.get(row.agent);
-      const item = el("li", `feed-item ${row.status === "FAILURE" ? "is-fail" : ""}`);
-      const top = el("div", "feed-top");
-      top.append(
-        el("strong", undefined, `${agent?.emoji ?? "🤖"} ${agent?.name ?? row.agent}`),
-        statusPill(row.status),
-        el("time", undefined, formatTimestamp(row.timestamp)),
-      );
-      item.append(top, el("p", "feed-msg", row.message));
-      return item;
-    }),
-  );
+  return list
+    .map((r) => {
+      const emoji = state.agents.find((a) => a.id === r.agent)?.emoji ?? "🤖";
+      return `<div class="feed-row${r.status === "FAILURE" ? " failed" : ""}" role="button" tabindex="0">
+        <span class="mini">${esc(emoji)}</span>
+        <span class="mono muted">${esc(r.timestamp)}</span>
+        <strong>${esc(r.agent)}</strong>
+        <span class="msg">${esc(r.message)}</span>
+        ${badge(r.status)}
+      </div>`;
+    })
+    .join("");
 }
 
-function formatTimestamp(value: string): string {
-  const normalized = value.includes("T") ? value : `${value.replace(" ", "T")}+07:00`;
-  const date = new Date(normalized);
-  if (Number.isNaN(date.getTime())) return value;
+function render(app: HTMLElement): void {
+  const t = today();
+  const rows = state.rows;
+  const ok = rows.filter((r) => r.status === "SUCCESS").length;
+  const rate = rows.length ? `${Math.round((ok / rows.length) * 1000) / 10}%` : "—";
+  const runsToday = rows.filter((r) => r.timestamp.startsWith(t)).length;
+  const failToday = rows.filter((r) => r.timestamp.startsWith(t) && r.status === "FAILURE").length;
+  const open = Math.max(0, 1);
 
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "numeric",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hourCycle: "h23",
-    timeZone: "Asia/Vientiane",
-  }).formatToParts(date);
-  const values = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
-  const months = [
-    "ມັງກອນ", "ກຸມພາ", "ມີນາ", "ເມສາ", "ພຶດສະພາ", "ມິຖຸນາ",
-    "ກໍລະກົດ", "ສິງຫາ", "ກັນຍາ", "ຕຸລາ", "ພະຈິກ", "ທັນວາ",
-  ];
-  const month = Number(values.month);
-  return `${values.day} ${months[month - 1]} ${values.year} · ${values.hour}:${values.minute}`;
+  app.innerHTML = `<main class="wrap">
+    <header class="top">
+      <div>
+        <h1>AI Company – Virtual Office</h1>
+        <p class="muted">Automated employee operations &amp; Discord dispatcher</p>
+      </div>
+      <p class="mono muted pill">Last run: ${esc(rows[0]?.timestamp ?? "—")} (${TZ})</p>
+    </header>
+
+    <section class="stats">
+      ${statCard("Total employees", String(state.agents.length), `${open} open desk`)}
+      ${statCard("Runs today", String(runsToday), "Logged in the Sheet")}
+      ${statCard("Success rate", rate, "All logged runs")}
+      ${statCard("Failures today", String(failToday), failToday ? "Check the log below" : "All clear")}
+    </section>
+
+    <h2>Employees <span class="muted">/ ພະນັກງານ</span></h2>
+    <section class="grid">
+      ${state.agents.map(agentCard).join("")}
+      <article class="card vacancy"><p class="plus">+</p><h3>Vacant desk</h3>
+        <p class="muted">Add an entry to <code>public/data/agents.json</code> to hire a new AI employee.</p></article>
+    </section>
+
+    <section class="card feed-box">
+      <div class="feed-head">
+        <h2>Activity feed <span class="muted">/ ບັນທຶກການເຮັດວຽກ</span></h2>
+        <input id="q" type="search" placeholder="Search logs…" />
+        <div class="seg" id="seg">
+          <button data-f="ALL" class="on">All</button>
+          <button data-f="SUCCESS">Success</button>
+          <button data-f="FAILURE">Failed</button>
+        </div>
+      </div>
+      <div id="feed">${feedHtml()}</div>
+    </section>
+  </main>`;
+
+  const feed = app.querySelector<HTMLElement>("#feed");
+  const seg = app.querySelector<HTMLElement>("#seg");
+  const q = app.querySelector<HTMLInputElement>("#q");
+  if (!feed || !seg || !q) return;
+
+  q.addEventListener("input", () => {
+    state.q = q.value;
+    feed.innerHTML = feedHtml();
+  });
+  seg.addEventListener("click", (e) => {
+    const f = (e.target as HTMLElement).dataset["f"] as Filter | undefined;
+    if (!f) return;
+    state.filter = f;
+    seg.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset["f"] === f));
+    feed.innerHTML = feedHtml();
+  });
+  feed.addEventListener("click", (e) => {
+    (e.target as HTMLElement).closest(".feed-row")?.classList.toggle("open");
+  });
 }
 
 async function main(): Promise<void> {
-  const subtitle = document.getElementById("subtitle")!;
+  const app = document.getElementById("app");
+  if (!app) return;
   try {
-    const [agents, rawRows] = await Promise.all([
-      loadJson<Agent[]>("agents.json"),
-      loadJson<LogRow[]>("log.json"),
-    ]);
-    // ຈັດລຽງລາຍການໃໝ່ສຸດໄວ້ກ່ອນ
-    const rows = rawRows
-      .filter((r) => isStatus(r.status))
-      .sort((a, b) => b.timestamp.localeCompare(a.timestamp));
-
-    subtitle.textContent = `ພະນັກງານ AI ${agents.length} ຄົນ`;
-    renderStats(document.getElementById("stats")!, rows);
-    renderDesks(document.getElementById("desks")!, agents, rows);
-    renderFeed(document.getElementById("feed")!, agents, rows);
-  } catch (error: unknown) {
-    subtitle.textContent = `ໂຫຼດຂໍ້ມູນບໍ່ສຳເລັດ: ${error instanceof Error ? error.message : String(error)}`;
+    const [agents, rows] = await Promise.all([load<Agent[]>("agents.json"), load<LogRow[]>("log.json")]);
+    state.agents = agents;
+    state.rows = [...rows].sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+    render(app);
+  } catch (e) {
+    app.innerHTML = `<p class="empty">Could not load data: ${esc(String(e))}</p>`;
   }
 }
 

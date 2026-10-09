@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "dev": "npm --prefix office-web run dev",
     "typecheck": "tsc --noEmit",
     "class-agent": "tsx class-agent/class-agent.ts",
-    "stock-agent": "tsx stock-agent/stock-agent.ts"
+    "stock-agent": "tsx stock-agent/stock-agent.ts",
+    "export-log": "tsx scripts/export-log.ts"
   },
   "dependencies": {
     "googleapis": "^150.0.1"

@@ -1,5 +1,5 @@
 .env
 office-web/node_modules/
 office-web/dist/
-office-web/tsconfig.tsbuildinfo
+*.tsbuildinfo
 node_modules/

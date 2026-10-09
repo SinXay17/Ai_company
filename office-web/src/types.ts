@@ -1,16 +1,16 @@
 export type RunStatus = "SUCCESS" | "FAILURE";
 
-/** ໜຶ່ງແຖວໃນ Google Sheet "AI Office Log" */
+/** One row of the "AI Office Log" sheet (columns A:D). */
 export interface LogRow {
-  timestamp: string; // "2026-10-05 06:00:12" (ເວລາລາວ)
-  agent: string; // ກົງກັບ Agent.id
+  timestamp: string; // "YYYY-MM-DD HH:mm:ss" (Asia/Vientiane)
+  agent: string; // must equal Agent.id
   status: RunStatus;
   message: string;
 }
 
-/** ພະນັກງານໜຶ່ງຄົນ — ເພີ່ມລາຍການໃໝ່ໃນ public/data/agents.json */
+/** One employee. Add an entry in public/data/agents.json to hire. */
 export interface Agent {
-  id: string;
+  id: string; // same name as the Agent column in the Sheet
   name: string;
   role: string;
   schedule: string;

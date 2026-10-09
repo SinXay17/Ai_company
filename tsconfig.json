@@ -11,5 +11,6 @@
     "types": ["node"],
     "lib": ["ES2022", "DOM"]
   },
-  "include": ["class-agent/**/*.ts", "stock-agent/**/*.ts"]
+  "include": ["class-agent/**/*.ts", "stock-agent/**/*.ts"],
+  "exclude": ["node_modules", "office-web"]
 }
