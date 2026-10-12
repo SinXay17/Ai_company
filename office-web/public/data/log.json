@@ -1,20 +1,338 @@
 [
   {
-    "timestamp": "2026-10-05T10:30:00+07:00",
+    "timestamp": "2026-10-12 06:05:32",
     "agent": "stock-agent",
     "status": "SUCCESS",
-    "message": "ອັບເດດລາຄາຮຸ້ນ ແລະສົ່ງບົດສະຫຼຸບຮຽບຮ້ອຍແລ້ວ"
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $229.28 (+0.00% ຈາກມື້ວານ) 📈"
   },
   {
-    "timestamp": "2026-10-05T08:00:00+07:00",
+    "timestamp": "2026-10-12 06:00:54",
     "agent": "class-agent",
     "status": "SUCCESS",
-    "message": "ກວດກາຕາຕະລາງຮຽນມື້ນີ້ຮຽບຮ້ອຍແລ້ວ"
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການສ້າງໂປຣແກຣມດ້ວຍພາສາJava II (ຫ້ອງ307)"
   },
   {
-    "timestamp": "2026-10-04T10:30:00+07:00",
+    "timestamp": "2026-10-11 06:05:29",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $229.28 (+0.00% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-10-11 06:00:50",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "🎉 ມື້ນີ້ບໍ່ມີຄາບຮຽນ"
+  },
+  {
+    "timestamp": "2026-10-10 06:05:29",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $229.28 (-0.52% ຈາກມື້ວານ) 📉"
+  },
+  {
+    "timestamp": "2026-10-10 06:00:51",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການບໍລິຫານເບື້ອງຕົ້ນ (ຫ້ອງ 308)"
+  },
+  {
+    "timestamp": "2026-10-09 06:05:32",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $230.48 (-2.94% ຈາກມື້ວານ) 📉"
+  },
+  {
+    "timestamp": "2026-10-09 06:00:56",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ເຕັກນິກການຂຽນບົດຄົ້ນຄວ້າ (ຫ້ອງ 308)"
+  },
+  {
+    "timestamp": "2026-10-08 06:05:42",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $237.47 (-0.74% ຈາກມື້ວານ) 📉"
+  },
+  {
+    "timestamp": "2026-10-08 06:01:23",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການສ້າງໂປຣແກຣມສໍາຫຼັບມືຖື II (ຫ້ອງ 503)"
+  },
+  {
+    "timestamp": "2026-10-07 06:05:34",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $239.24 (+0.14% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-10-07 06:01:03",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ວິທະຍາສາດຂໍ້ມູນ (ຫ້ອງ 502)"
+  },
+  {
+    "timestamp": "2026-10-06 06:05:32",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $238.90 (+2.12% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-10-06 06:00:59",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການສ້າງໂປຣແກຣມດ້ວຍພາສາ C# II (ຫ້ອງ 307)"
+  },
+  {
+    "timestamp": "2026-10-05 08:30:45",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການສ້າງໂປຣແກຣມດ້ວຍພາສາJava II (ຫ້ອງ307)"
+  },
+  {
+    "timestamp": "2026-10-05 06:05:35",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $233.95 (+0.00% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-10-05 06:00:59",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການສ້າງໂປຣແກຣມດ້ວຍພາສາJava II (ຫ້ອງ307)"
+  },
+  {
+    "timestamp": "2026-10-04 14:01:17",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $233.95 (+0.00% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-10-04 09:20:34",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "🎉 ມື້ນີ້ບໍ່ມີຄາບຮຽນ"
+  },
+  {
+    "timestamp": "2026-10-04 06:05:31",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $233.95 (+0.00% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-10-04 06:00:58",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "🎉 ມື້ນີ້ບໍ່ມີຄາບຮຽນ"
+  },
+  {
+    "timestamp": "2026-10-03 13:37:45",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $233.95 (+0.00% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-10-03 08:40:03",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການບໍລິຫານເບື້ອງຕົ້ນ (ຫ້ອງ 308)"
+  },
+  {
+    "timestamp": "2026-10-03 06:05:31",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $233.95 (+1.34% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-10-03 06:01:00",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການບໍລິຫານເບື້ອງຕົ້ນ (ຫ້ອງ 308)"
+  },
+  {
+    "timestamp": "2026-10-02 14:04:58",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $230.86 (+0.00% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-10-02 08:56:27",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ເຕັກນິກການຂຽນບົດຄົ້ນຄວ້າ (ຫ້ອງ 308)"
+  },
+  {
+    "timestamp": "2026-10-02 06:05:35",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $230.86 (+1.09% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-10-02 06:00:58",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ເຕັກນິກການຂຽນບົດຄົ້ນຄວ້າ (ຫ້ອງ 308)"
+  },
+  {
+    "timestamp": "2026-10-01 14:14:44",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $228.38 (+0.00% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-10-01 08:45:32",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການສ້າງໂປຣແກຣມສໍາຫຼັບມືຖື II (ຫ້ອງ 503)"
+  },
+  {
+    "timestamp": "2026-10-01 06:05:33",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $228.38 (+0.51% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-10-01 06:00:55",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການສ້າງໂປຣແກຣມສໍາຫຼັບມືຖື II (ຫ້ອງ 307)"
+  },
+  {
+    "timestamp": "2026-09-30 13:50:53",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $227.21 (+0.00% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-09-30 09:30:48",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $227.21 (-0.72% ຈາກມື້ວານ) 📉"
+  },
+  {
+    "timestamp": "2026-09-30 09:30:14",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ວິທະຍາສາດຂໍ້ມູນ (ຫ້ອງ 502)"
+  },
+  {
+    "timestamp": "2026-09-29 09:27:25",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການສ້າງໂປຣແກຣມດ້ວຍພາສາ C# II (ຫ້ອງ 307)"
+  },
+  {
+    "timestamp": "2026-09-29 09:15:16",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $228.86 (+1.68% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-09-29 09:02:04",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການສ້າງໂປຣແກຣມດ້ວຍພາສາ C# II (ຫ້ອງ 307)"
+  },
+  {
+    "timestamp": "2026-09-29 09:01:36",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການສ້າງໂປຣແກຣມດ້ວຍພາສາ C# II (ຫ້ອງ 307)"
+  },
+  {
+    "timestamp": "2026-09-28 14:03:25",
     "agent": "stock-agent",
     "status": "FAILURE",
-    "message": "ບໍ່ສາມາດດຶງຂໍ້ມູນລາຄາຮຸ້ນໄດ້"
+    "message": "API Ninjas error ສຳລັບ NVDA: 400"
+  },
+  {
+    "timestamp": "2026-09-28 08:21:29",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການສ້າງໂປຣແກຣມດ້ວຍພາສາJava II (ຫ້ອງ307)"
+  },
+  {
+    "timestamp": "2026-09-27 13:39:28",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $225.07 (+0.00% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-09-27 08:03:36",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "🎉 ມື້ນີ້ບໍ່ມີຄາບຮຽນ"
+  },
+  {
+    "timestamp": "2026-09-26 17:32:03",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການບໍລິຫານເບື້ອງຕົ້ນ (ຫ້ອງ 308)"
+  },
+  {
+    "timestamp": "2026-09-26 17:31:14",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການບໍລິຫານເບື້ອງຕົ້ນ (ຫ້ອງ 308)"
+  },
+  {
+    "timestamp": "2026-09-26 17:29:42",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການບໍລິຫານເບື້ອງຕົ້ນ (ຫ້ອງ 308)"
+  },
+  {
+    "timestamp": "2026-09-26 17:28:37",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການບໍລິຫານເບື້ອງຕົ້ນ (ຫ້ອງ 308)"
+  },
+  {
+    "timestamp": "2026-09-26 17:28:22",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການບໍລິຫານເບື້ອງຕົ້ນ (ຫ້ອງ 308)"
+  },
+  {
+    "timestamp": "2026-09-26 09:47:12",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $225.07 (+0.00% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-09-26 09:45:57",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການບໍລິຫານເບື້ອງຕົ້ນ (ຫ້ອງ 308)"
+  },
+  {
+    "timestamp": "2026-09-26 09:45:18",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $225.07 (+0.22% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-09-26 09:42:42",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $225.07 (+0.22% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-09-26 09:37:16",
+    "agent": "stock-agent",
+    "status": "SUCCESS",
+    "message": "📊 ສະຫຼຸບຫຸ້ນປະຈຳວັນນີ້\nNVDA: $225.07 (+0.22% ຈາກມື້ວານ) 📈"
+  },
+  {
+    "timestamp": "2026-09-26 09:31:43",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "Discord message sent; events=1"
+  },
+  {
+    "timestamp": "2026-09-26 09:28:50",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "Discord message sent; events=1"
   }
 ]
