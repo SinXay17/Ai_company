@@ -1,72 +1,72 @@
 name: Export Log
 
+# ห้ามเพิ่ม `schedule:` — cron-job.org เป็นตัวยิง agent เท่านั้น
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Class Agent", "Stock Agent"]
+    types: [completed]
 
 permissions:
   contents: write
-  actions: write
 
 concurrency:
   group: export-log
   cancel-in-progress: false
 
+env:
+  # branch ที่เก็บเว็บ (office-web/) — เปลี่ยนเป็น main หลัง merge
+  SITE_BRANCH: office-web
+
 jobs:
   export:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion != 'cancelled'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.SITE_BRANCH }}
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "22"
           cache: npm
 
       - run: npm ci
 
-      - name: Export sanitized log from Google Sheets
-        run: npm run export-log
+      - name: Export log from Google Sheet
+        run: npx tsx scripts/export-log.ts
         env:
           GOOGLE_SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
           LOG_SHEET_ID: ${{ secrets.LOG_SHEET_ID }}
 
-      - name: Commit log.json (rebase and retry)
-        id: commit
+      - name: Commit and push if changed
         shell: bash
         run: |
           file="office-web/public/data/log.json"
-          if [ -z "$(git status --porcelain -- "$file")" ]; then
-            echo "No changes to commit."
-            echo "changed=false" >> "$GITHUB_OUTPUT"
+          git add -- "$file"
+          if git diff --cached --quiet -- "$file"; then
+            echo "log.json unchanged — nothing to commit."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "$file"
-          git commit -m "chore(office-web): export sanitized log"
+          git commit -m "chore: update log.json"
 
-          pushed=0
           for attempt in 1 2 3 4 5; do
-            if git fetch origin "$GITHUB_REF_NAME" &&
-              git rebase "origin/$GITHUB_REF_NAME" &&
-              git push origin "HEAD:$GITHUB_REF_NAME"; then
-              pushed=1
-              break
+            if git push origin "HEAD:${SITE_BRANCH}"; then
+              echo "Pushed on attempt ${attempt}."
+              exit 0
             fi
-            git rebase --abort 2>/dev/null || true
+            echo "Push rejected (attempt ${attempt}) — rebasing and retrying."
+            if ! git pull --rebase origin "${SITE_BRANCH}"; then
+              git rebase --abort || true
+              echo "::error::Rebase conflict while pushing log.json"
+              exit 1
+            fi
             sleep $((attempt * 3))
           done
-
-          if [ "$pushed" != "1" ]; then
-            echo "::error::Push failed after five attempts."
-            exit 1
-          fi
-          echo "changed=true" >> "$GITHUB_OUTPUT"
-
-      - name: Trigger Pages deployment
-        if: steps.commit.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run deploy-pages.yml --ref "$GITHUB_REF_NAME"
+          echo "::error::Push failed after 5 attempts."
+          exit 1
