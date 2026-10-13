@@ -384,3 +384,27 @@ input[type=search]:focus {
     grid-column: 1 / -1
   }
 }
+
+.wrap.narrow { max-width: 420px; }
+.login { display: grid; gap: 12px; padding: 24px; }
+.login label { display: grid; gap: 4px; font-size: 14px; }
+.login input { padding: 10px 12px; border: 1px solid #d0d5dd; border-radius: 8px; font: inherit; }
+.primary { padding: 10px 14px; border: 0; border-radius: 8px; background: #5b4bd6; color: #fff; font: inherit; cursor: pointer; }
+.primary:disabled { opacity: 0.6; cursor: wait; }
+.err { color: #b42318; min-height: 1.2em; margin: 0; }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+a.pill, button.pill { text-decoration: none; color: inherit; cursor: pointer; font: inherit; }
+a.card.clickable { text-decoration: none; color: inherit; cursor: pointer; }
+a.card.clickable:hover { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); }
+.card.disabled { opacity: 0.55; }
+.back { display: inline-block; margin-top: 8px; }
+
+.form { display: grid; gap: 12px; padding: 20px; margin-bottom: 16px; }
+.form-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.form label { display: grid; gap: 4px; font-size: 14px; }
+.form input, .form select { padding: 10px 12px; border: 1px solid #d0d5dd; border-radius: 8px; font: inherit; background: #fff; }
+.day { padding: 8px 0; }
+.day h3 { margin: 8px 0; }
+.sched-row { display: flex; gap: 12px; align-items: center; padding: 8px 0; border-top: 1px solid #eef0f3; }
+.sched-row .msg { flex: 1; }
+.del { color: #b42318; }
