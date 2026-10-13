@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "build": "npm --prefix office-web run build",
     "dev": "npm --prefix office-web run dev",
     "typecheck": "tsc --noEmit",
     "class-agent": "tsx class-agent/class-agent.ts",
