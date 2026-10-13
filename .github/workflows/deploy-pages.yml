@@ -19,7 +19,7 @@ concurrency:
 
 env:
   # branch ที่เก็บเว็บ (office-web/) — เปลี่ยนเป็น main หลัง merge
-  SITE_BRANCH: office-web
+  SITE_BRANCH: main
 
 jobs:
   build:
