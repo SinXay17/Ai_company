@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "2026-10-17 06:00:54",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - ການບໍລິຫານເບື້ອງຕົ້ນ (ຫ້ອງ 308)"
+  },
+  {
+    "timestamp": "2026-10-16 21:04:41",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "🎉 ມື້ນີ້ບໍ່ມີຄາບຮຽນ"
+  },
+  {
     "timestamp": "2026-10-16 06:05:38",
     "agent": "stock-agent",
     "status": "SUCCESS",
