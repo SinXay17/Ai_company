@@ -11,6 +11,7 @@
     "export-log": "tsx scripts/export-log.ts"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.117.3",
     "googleapis": "^150.0.1"
   },
   "devDependencies": {

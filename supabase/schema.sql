@@ -64,3 +64,6 @@ grant select, insert, update, delete
   on public.class_schedule to authenticated;
 grant select, insert, update, delete
   on public.class_notes to authenticated;
+
+grant select on public.class_schedule to service_role;
+grant select, insert, update, delete on public.class_notes to service_role;

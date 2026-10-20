@@ -1,33 +1,55 @@
 import { google } from "googleapis";
+import { createClient } from "@supabase/supabase-js";
 
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_SECRET_KEY = process.env.SUPABASE_SECRET_KEY;
 const SERVICE_ACCOUNT_KEY = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
-const CALENDAR_ID = process.env.GOOGLE_CALENDAR_ID;
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
 const LOG_SHEET_ID = process.env.LOG_SHEET_ID;
 
 type RunStatus = "SUCCESS" | "FAILURE";
 
+type ClassRow = {
+  subject: string;
+  location: string | null;
+  start_time: string;
+  end_time: string;
+};
+
 function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
 
-function laosDayRange(): { start: Date; end: Date } {
+// ຫາມື້ໃນອາທິດຕາມເວລາລາວ (1=ຈັນ ... 7=ອາທິດ)
+function laosDayOfWeek(): number {
   const offset = 7 * 60 * 60 * 1000;
-  const laosNow = new Date(Date.now() + offset);
-  const year = laosNow.getUTCFullYear();
-  const month = laosNow.getUTCMonth();
-  const day = laosNow.getUTCDate();
-  const start = new Date(Date.UTC(year, month, day, 0, 0, 0) - offset);
-  const end = new Date(Date.UTC(year, month, day, 23, 59, 59) - offset);
-  return { start, end };
+  const day = new Date(Date.now() + offset).getUTCDay();
+  return day === 0 ? 7 : day;
 }
 
-function formatTime(iso: string): string {
-  return new Date(iso).toLocaleTimeString("lo-LA", {
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZone: "Asia/Vientiane",
+// ຕັດ "08:30:00" ໃຫ້ເຫຼືອ "08:30"
+function formatTime(time: string): string {
+  return time.slice(0, 5);
+}
+
+async function getTodayClasses(): Promise<ClassRow[]> {
+  if (!SUPABASE_URL || !SUPABASE_SECRET_KEY) {
+    throw new Error("ຂາດ SUPABASE_URL ຫຼື SUPABASE_SECRET_KEY ໃນ environment");
+  }
+
+  // ໃຊ້ secret key ສະເພາະຝັ່ງ agent ເທົ່ານັ້ນ
+  const supabase = createClient(SUPABASE_URL, SUPABASE_SECRET_KEY, {
+    auth: { persistSession: false, autoRefreshToken: false },
   });
+
+  const { data, error } = await supabase
+    .from("class_schedule")
+    .select("subject, location, start_time, end_time")
+    .eq("day_of_week", laosDayOfWeek())
+    .order("start_time", { ascending: true });
+
+  if (error) throw new Error(`ດຶງຕາຕະລາງຈາກ Supabase ບໍ່ສຳເລັດ: ${error.message}`);
+  return (data ?? []) as ClassRow[];
 }
 
 async function sendToDiscord(message: string): Promise<void> {
@@ -81,34 +103,18 @@ async function main(): Promise<void> {
   let failure: unknown;
 
   try {
-    if (!SERVICE_ACCOUNT_KEY || !CALENDAR_ID || !WEBHOOK_URL) {
-      throw new Error("ຂາດ GOOGLE_SERVICE_ACCOUNT_KEY, GOOGLE_CALENDAR_ID ຫຼື DISCORD_WEBHOOK_URL");
+    if (!WEBHOOK_URL) {
+      throw new Error("ຂາດ DISCORD_WEBHOOK_URL ໃນ environment");
     }
 
-    const credentials = JSON.parse(SERVICE_ACCOUNT_KEY);
-    const auth = new google.auth.GoogleAuth({
-      credentials,
-      scopes: ["https://www.googleapis.com/auth/calendar.readonly"],
-    });
-    const calendar = google.calendar({ version: "v3", auth });
-    const { start, end } = laosDayRange();
-    const response = await calendar.events.list({
-      calendarId: CALENDAR_ID,
-      timeMin: start.toISOString(),
-      timeMax: end.toISOString(),
-      singleEvents: true,
-      orderBy: "startTime",
-    });
-
-    const events = response.data.items ?? [];
+    const classes = await getTodayClasses();
     let message: string;
-    if (events.length === 0) {
+    if (classes.length === 0) {
       message = "🎉 ມື້ນີ້ບໍ່ມີຄາບຮຽນ";
     } else {
-      const lines = events.map((event) => {
-        const time = event.start?.dateTime ? formatTime(event.start.dateTime) : "ຕະຫຼອດມື້";
-        const room = event.location ? ` (${event.location})` : "";
-        return `🕒 ${time} - ${event.summary ?? "(ບໍ່ມີຫົວຂໍ້)"}${room}`;
+      const lines = classes.map((item) => {
+        const room = item.location ? ` (${item.location})` : "";
+        return `🕒 ${formatTime(item.start_time)} - ${item.subject}${room}`;
       });
       message = `📚 ຕາຕະລາງຮຽນມື້ນີ້\n${lines.join("\n")}`;
     }

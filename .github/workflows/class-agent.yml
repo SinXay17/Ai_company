@@ -18,8 +18,9 @@ jobs:
 
       - name: Run class agent
         env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
           GOOGLE_SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
-          GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
           DISCORD_WEBHOOK_URL: ${{ secrets.CLASS_DISCORD_WEBHOOK_URL }}
           LOG_SHEET_ID: ${{ secrets.LOG_SHEET_ID }}
         run: npx tsx class-agent/class-agent.ts
