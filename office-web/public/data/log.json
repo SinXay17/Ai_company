@@ -1,5 +1,23 @@
 [
   {
+    "timestamp": "2026-10-21 06:00:59",
+    "agent": "class-agent",
+    "status": "FAILURE",
+    "message": "Node.js detected but native WebSocket not found.\n\nSuggested solution: Ensure you are running Node.js 22+ or provide a WebSocket implementation via the transport option."
+  },
+  {
+    "timestamp": "2026-10-20 19:08:42",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "📚 ຕາຕະລາງຮຽນມື້ນີ້\n🕒 08:30 - Java II (307)"
+  },
+  {
+    "timestamp": "2026-10-20 19:02:58",
+    "agent": "class-agent",
+    "status": "SUCCESS",
+    "message": "🎉 ມື້ນີ້ບໍ່ມີຄາບຮຽນ"
+  },
+  {
     "timestamp": "2026-10-20 06:05:31",
     "agent": "stock-agent",
     "status": "SUCCESS",
