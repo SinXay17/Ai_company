@@ -48,7 +48,7 @@ function listHtml(rows: ClassRow[]): string {
 export async function mountClass(app: HTMLElement): Promise<void> {
   app.innerHTML = `<main class="wrap">
     <header class="top">
-      <div><h1>📚 class_ai</h1><p class="muted">ຕາຕະລາງຮຽນປະຈຳອາທິດ</p></div>
+      <div><h1>class_ai</h1><p class="muted">ຕາຕະລາງຮຽນປະຈຳອາທິດ</p></div>
       <a class="pill" href="#/">← ກັບໜ້າຫຼັກ</a>
     </header>
     <section class="card form">
