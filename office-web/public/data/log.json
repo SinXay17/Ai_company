@@ -1,5 +1,11 @@
 [
   {
+    "timestamp": "2026-10-29 06:00:58",
+    "agent": "class-agent",
+    "status": "FAILURE",
+    "message": "Node.js detected but native WebSocket not found.\n\nSuggested solution: Ensure you are running Node.js 22+ or provide a WebSocket implementation via the transport option."
+  },
+  {
     "timestamp": "2026-10-28 06:05:32",
     "agent": "stock-agent",
     "status": "SUCCESS",
