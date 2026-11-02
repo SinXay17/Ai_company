@@ -1,5 +1,11 @@
 [
   {
+    "timestamp": "2026-11-02 09:39:11",
+    "agent": "class-agent",
+    "status": "FAILURE",
+    "message": "ດຶງຕາຕະລາງຈາກ Supabase ບໍ່ສຳເລັດ: permission denied for table class_schedule"
+  },
+  {
     "timestamp": "2026-11-02 09:33:34",
     "agent": "class-agent",
     "status": "FAILURE",
