@@ -1,5 +1,11 @@
 [
   {
+    "timestamp": "2026-11-02 09:25:25",
+    "agent": "class-agent",
+    "status": "FAILURE",
+    "message": "ດຶງຕາຕະລາງຈາກ Supabase ບໍ່ສຳເລັດ: TypeError: fetch failed"
+  },
+  {
     "timestamp": "2026-10-30 09:46:58",
     "agent": "class-agent",
     "status": "FAILURE",
