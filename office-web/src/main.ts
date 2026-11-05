@@ -5,6 +5,7 @@ import { mountLogPage } from "./log-page";
 import { mountHome } from "./pages/home";
 import { mountClass } from "./pages/class";
 import { mountLogin } from "./pages/login";
+import { mountAgent } from "./pages/agent";
 
 const app = document.getElementById("app");
 
@@ -23,7 +24,11 @@ async function route(): Promise<void> {
     mountLogin(app);
     return;
   }
-    if (path === "/class") {
+  if (path === "/agent/class") {
+    await mountAgent(app);
+    return;
+  }
+  if (path === "/class") {
     await mountClass(app);
     return;
   }

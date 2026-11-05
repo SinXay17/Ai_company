@@ -9,7 +9,7 @@ interface AiCard {
 }
 
 const CARDS: AiCard[] = [
-  { id: "class_ai", emoji: "📚", name: "class_ai", desc: "ຜູ້ຊ່ວຍຕາຕະລາງຮຽນ", href: "#/class" },
+  { id: "class_ai", emoji: "📚", name: "class_ai", desc: "ຜູ້ຊ່ວຍຕາຕະລາງຮຽນ", href: "#/agent/class" },
   { id: "stock_ai", emoji: "📈", name: "stock_ai", desc: "ຜູ້ຊ່ວຍຕິດຕາມຫຸ້ນ (ໄວໆນີ້)", href: null },
 ];
 
