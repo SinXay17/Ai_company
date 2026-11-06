@@ -1,4 +1,5 @@
 import { supabase } from "../supabase";
+import { parseNote } from "../note-parser";
 
 interface InboxRow {
   id: string;
@@ -59,13 +60,24 @@ export async function mountAgent(app: HTMLElement): Promise<void> {
         <a class="pill" href="#/">← ກັບໜ້າຫຼັກ</a>
       </div>
     </header>
-    <section class="card" id="list" style="margin-top:24px"><p class="muted">ກຳລັງໂຫຼດ…</p></section>
+    <section class="card form" style="margin-top:24px">
+      <h3>ແຊັດກັບຜູ້ຊ່ວຍ</h3>
+      <div class="row">
+        <input id="chat" type="text" placeholder="ເຊັ່ນ no class today" style="flex:1;min-width:200px" />
+        <button id="send" class="primary">ສົ່ງ</button>
+      </div>
+      <p id="chat-msg" class="muted"></p>
+    </section>
+    <section class="card" id="list"><p class="muted">ກຳລັງໂຫຼດ…</p></section>
     <p id="err" class="err" role="alert"></p>
   </main>`;
 
   const list = app.querySelector<HTMLElement>("#list");
   const err = app.querySelector<HTMLElement>("#err");
-  if (!list || !err) return;
+  const chat = app.querySelector<HTMLInputElement>("#chat");
+  const send = app.querySelector<HTMLButtonElement>("#send");
+  const chatMsg = app.querySelector<HTMLElement>("#chat-msg");
+  if (!list || !err || !chat || !send || !chatMsg) return;
 
   const refresh = async (): Promise<void> => {
     try {
@@ -74,6 +86,34 @@ export async function mountAgent(app: HTMLElement): Promise<void> {
       list.innerHTML = `<p class="err">ໂຫຼດບໍ່ໄດ້: ${esc(e instanceof Error ? e.message : String(e))}</p>`;
     }
   };
+
+  // ສົ່ງຂໍ້ຄວາມແຊັດ: ແປງເປັນ kind ແລ້ວບັນທຶກລົງ class_notes
+  const submitChat = async (): Promise<void> => {
+    chatMsg.className = "muted";
+    chatMsg.textContent = "";
+    const parsed = parseNote(chat.value);
+    if (!parsed) {
+      chatMsg.textContent = "ກະລຸນາພິມຂໍ້ຄວາມກ່ອນ";
+      return;
+    }
+    send.disabled = true;
+    const { error } = await supabase
+      .from("class_notes")
+      .insert({ kind: parsed.kind, content: parsed.content });
+    send.disabled = false;
+    if (error) {
+      chatMsg.className = "err";
+      chatMsg.textContent = error.message;
+      return;
+    }
+    chat.value = "";
+    chatMsg.textContent = `ບັນທຶກແລ້ວ (kind = ${parsed.kind})`;
+  };
+
+  send.addEventListener("click", () => void submitChat());
+  chat.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") void submitChat();
+  });
 
   list.addEventListener("click", (e) => {
     const id = (e.target as HTMLElement).closest<HTMLElement>(".read")?.dataset["id"];
